@@ -63,4 +63,25 @@ Start the server:
 
 dart run bin/server.dart
 
+1. Create a New Request:
+Set request type to POST
+Enter URL: http://localhost:8080/api/users
+2. Configure the Headers:
+Click on the Headers tab
+Add a header:
+Key: Content-Type
+Value: application/json
+3. Configure the Body:
+Click on the Body tab
+Select raw
+Select JSON from the dropdown menu (very important!)
+Enter this exact JSON:
+
+{
+  "nombre": "Test User",
+  "correo": "test@example.com",
+  "contra": "password123"
+}
+
+
 The server will run on port 8080 by default, and you can test it with Postman using the endpoints:
