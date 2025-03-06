@@ -1,45 +1,49 @@
 import 'dart:io';
-
 import 'package:shelf/shelf.dart';
-import 'package:shelf/shelf_io.dart';
+import 'package:shelf/shelf_io.dart' as io;
 import 'package:shelf_router/shelf_router.dart';
+import 'dart:convert';
 
-import 'package:client_service/api/user_api.dart';
-import 'package:client_service/repositories/user_repository.dart';
-import 'package:client_service/services/user_service.dart';
+void main() async {
+  final app = Router();
 
-void main(List<String> args) async {
-  // Create dependencies
-  final userRepository = UserRepository();
-  final userService = UserService(userRepository);
-  final userApi = UserApi(userService);
-  
-  // Create a router and add the API routes
-  final router = Router();
-  userApi.registerRoutes(router);
+  // Health check endpoint
+  app.get('/health', (Request request) {
+    return Response.ok('OK');
+  });
 
-  // Add CORS middleware
-  Handler handler = const Pipeline()
+  // User endpoints
+  app.post('/api/users', (Request request) async {
+    final payload = await request.readAsString();
+    final user = jsonDecode(payload);
+    return Response.ok(
+      jsonEncode({
+        'success': true,
+        'data': {...user, 'id': 'generated-id'}
+      }),
+      headers: {'content-type': 'application/json'},
+    );
+  });
+
+  final handler = Pipeline()
       .addMiddleware(logRequests())
-      .addMiddleware(_corsHeaders())
-      .addHandler(router.call);
+      .addMiddleware(corsHeaders())
+      .addHandler(app);
 
-  // Start the server
   final port = int.parse(Platform.environment['PORT'] ?? '8080');
-  final server = await serve(handler, InternetAddress.anyIPv4, port);
-  print('Server running on port ${server.port}');
+  final server = await io.serve(handler, '0.0.0.0', port);
+  print('Server listening on port ${server.port}');
 }
 
-Middleware _corsHeaders() {
-  return (Handler handler) {
-    return (Request request) async {
-      final response = await handler(request);
+Middleware corsHeaders() {
+  return createMiddleware(
+    requestHandler: (Request request) => null,
+    responseHandler: (Response response) {
       return response.change(headers: {
-        ...response.headers,
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
-        'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Origin, Content-Type',
       });
-    };
-  };
+    },
+  );
 }
