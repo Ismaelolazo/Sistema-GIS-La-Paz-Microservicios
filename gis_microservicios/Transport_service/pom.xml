@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>Sistema-GIS-La-Paz-Microservicios</groupId>
-	<artifactId>product</artifactId>
+	<artifactId>Transport_service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>product</name>
-	<description>Demo project for Spring Boot</description>
+	<name>Transport_service</name>
+	<description>Microservicios del proyecto GIS para la ciudad de LP</description>
 	<url/>
 	<licenses>
 		<license/>
