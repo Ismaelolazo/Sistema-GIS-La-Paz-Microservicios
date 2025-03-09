@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import Sistema_GIS_La_Paz_Microservicios.Usuario_service.dto.UsuarioDTO;
 import Sistema_GIS_La_Paz_Microservicios.Usuario_service.entity.Usuario;
 import Sistema_GIS_La_Paz_Microservicios.Usuario_service.service.UsuarioService;
+import Sistema_GIS_La_Paz_Microservicios.Usuario_service.exception.UsuarioNotFoundException;
 import jakarta.validation.Valid;
 
 @RestController
@@ -40,14 +41,19 @@ public class UsuarioController implements UsuarioControllerSwagger {
 	}
 	
 	@DeleteMapping("/Usuario/delete/{id}")
-	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-	public void removeUsuario(@PathVariable int id) {
+	public ResponseEntity<String> removeUsuario(@PathVariable int id) {
 		usuarioService.deleteUsuario(id);
+		return ResponseEntity.status(HttpStatus.OK).body("Usuario with id " + id + " has been deleted.");
 	}
 
 	@Override
 	public Usuario UsuarioModel(@Valid Usuario model) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'UsuarioModel'");
+	}
+
+	@ExceptionHandler(UsuarioNotFoundException.class)
+	public ResponseEntity<String> handleUsuarioNotFoundException(UsuarioNotFoundException ex) {
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
 	}
 }
