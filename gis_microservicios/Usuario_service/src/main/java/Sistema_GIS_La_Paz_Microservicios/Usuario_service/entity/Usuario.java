@@ -62,7 +62,4 @@ public class Usuario {
 		return "Usuario [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password
 				+ "]";
 	}
-	
-	
-
 }
