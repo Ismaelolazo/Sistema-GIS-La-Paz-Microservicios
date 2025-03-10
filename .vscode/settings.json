@@ -1,4 +1,7 @@
 {
     "java.compile.nullAnalysis.mode": "automatic",
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.project.sourcePaths": [
+        "gis_microservicios/PuntosInt_service/src/main/java/SISTEMA_GIS_La_Paz_Microservicios/PuntosInt_service"
+    ]
 }
