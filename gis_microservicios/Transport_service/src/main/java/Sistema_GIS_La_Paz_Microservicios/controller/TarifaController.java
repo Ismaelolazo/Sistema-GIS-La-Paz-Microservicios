@@ -1,79 +1,62 @@
 package Sistema_GIS_La_Paz_Microservicios.controller;
 
+import Sistema_GIS_La_Paz_Microservicios.model.*;
+import Sistema_GIS_La_Paz_Microservicios.model.TarifaRequest;
+import Sistema_GIS_La_Paz_Microservicios.model.TarifaResponse;
+import Sistema_GIS_La_Paz_Microservicios.service.TarifaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/tarifas")
 public class TarifaController {
 
+    @Autowired
+    private TarifaService tarifaService;
+
     @GetMapping("/calcular")
-    public ResponseEntity<Map<String, Object>> calcularTarifa(
+    public ResponseEntity<?> calcularTarifa(
             @RequestParam String tipoVehiculo,
             @RequestParam String horario,
             @RequestParam String tramo,
-            @RequestParam int tarifaDiferenciada) {
+            @RequestParam Integer tarifaDiferenciada) {
         
-        // Validar parámetros de entrada
-        if (!tipoVehiculo.equalsIgnoreCase("minibus")) {
-            return ResponseEntity.badRequest().body(createErrorResponse("Tipo de vehículo no soportado. Solo 'minibus' disponible actualmente."));
+        try {
+            TarifaResponse response = tarifaService.calcularTarifa(tipoVehiculo, horario, tramo, tarifaDiferenciada);
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al calcular la tarifa: " + e.getMessage());
         }
-        
-        if (!horario.equalsIgnoreCase("diurno")) {
-            return ResponseEntity.badRequest().body(createErrorResponse("Horario no soportado. Solo 'diurno' disponible actualmente."));
-        }
-        
-        if (!tramo.equalsIgnoreCase("corto") && !tramo.equalsIgnoreCase("largo")) {
-            return ResponseEntity.badRequest().body(createErrorResponse("Tramo no válido. Use 'corto' o 'largo'."));
-        }
-        
-        if (tarifaDiferenciada != 0 && tarifaDiferenciada != 1) {
-            return ResponseEntity.badRequest().body(createErrorResponse("Tarifa diferenciada no válida. Use 0 (sin discapacidad) o 1 (con discapacidad)."));
-        }
-        
-        // Calcular tarifa
-        double tarifaBase = 0.0;
-        
-        if (tipoVehiculo.equalsIgnoreCase("minibus")) {
-            if (tramo.equalsIgnoreCase("corto")) {
-                tarifaBase = 2.40;
-            } else { // largo
-                tarifaBase = 3.00;
-            }
-        }
-        
-        // Aplicar descuento si tiene tarifa diferenciada (persona con discapacidad)
-        double tarifaFinal = tarifaBase;
-        boolean descuentoAplicado = false;
-        
-        if (tarifaDiferenciada == 1) {
-            // 50% de descuento para personas con discapacidad
-            tarifaFinal = tarifaBase * 0.5;
-            descuentoAplicado = true;
-        }
-        
-        // Preparar respuesta
-        Map<String, Object> response = new HashMap<>();
-        response.put("tipoVehiculo", tipoVehiculo);
-        response.put("horario", horario);
-        response.put("tramo", tramo);
-        response.put("tarifaBase", tarifaBase);
-        response.put("descuentoAplicado", descuentoAplicado);
-        response.put("tarifaFinal", tarifaFinal);
-        
-        return ResponseEntity.ok(response);
     }
     
-    private Map<String, Object> createErrorResponse(String mensaje) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("error", true);
-        response.put("mensaje", mensaje);
-        return response;
+    // Fix for POST endpoint that's using incompatible parameters
+    @PostMapping("/calcular")
+    public ResponseEntity<?> calcularTarifaPost(@RequestBody TarifaRequest request) {
+        try {
+            // Extract parameters from request
+            boolean esDiurno = request.getTipoHorario() == TipoHorario.DIURNO;
+            boolean esTramoCorto = request.getTipoTramo() == TipoTramo.CORTO;
+            
+            // Convert boolean tarifaDiferencial to Integer
+            Integer tarifaDiferenciada = request.isTarifaDiferencial() ? 1 : 0;
+            
+            // Use the String-based method to maintain consistent behavior
+            TarifaResponse response = tarifaService.calcularTarifa(
+                request.getTipoVehiculo().name().toLowerCase(),
+                esDiurno ? "diurno" : "nocturno",
+                esTramoCorto ? "corto" : "largo",
+                tarifaDiferenciada
+            );
+            
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al calcular la tarifa: " + e.getMessage());
+        }
     }
 }

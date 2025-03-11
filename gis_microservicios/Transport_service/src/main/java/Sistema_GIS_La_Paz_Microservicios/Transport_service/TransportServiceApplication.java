@@ -6,8 +6,11 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
-    "Sistema_GIS_La_Paz_Microservicios.Transport_service",
-    "Sistema_GIS_La_Paz_Microservicios.controller"
+    "Sistema_GIS_La_Paz_Microservicios.controller",
+    "Sistema_GIS_La_Paz_Microservicios.service",
+    "Sistema_GIS_La_Paz_Microservicios.model",
+    "Sistema_GIS_La_Paz_Microservicios.config",
+    "Sistema_GIS_La_Paz_Microservicios.Transport_service"
 })
 public class TransportServiceApplication {
     public static void main(String[] args) {
