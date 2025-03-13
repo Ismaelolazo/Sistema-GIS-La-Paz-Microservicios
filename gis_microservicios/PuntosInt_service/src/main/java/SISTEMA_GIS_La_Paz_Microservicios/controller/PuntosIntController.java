@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api/puntos-interes")
+
 public class PuntosIntController {
 
     private final List<Map<String, Object>> puntosInteres = new ArrayList<>();
