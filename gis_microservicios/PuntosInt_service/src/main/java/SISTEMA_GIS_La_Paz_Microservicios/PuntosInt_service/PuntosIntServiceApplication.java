@@ -9,6 +9,8 @@ import org.springframework.context.annotation.ComponentScan;
     "SISTEMA_GIS_La_Paz_Microservicios.PuntosInt_service",
     "SISTEMA_GIS_La_Paz_Microservicios.controller",
     "SISTEMA_GIS_La_Paz_Microservicios.config",
+    "SISTEMA_GIS_La_Paz_Microservicios.dto",
+    "SISTEMA_GIS_La_Paz_Microservicios.exception",
     "SISTEMA_GIS_La_Paz_Microservicios.service"  
 })
 
