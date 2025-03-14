@@ -14,18 +14,21 @@ import java.util.List;
 @Configuration
 public class OpenApiConfig {
 
-    @Bean
-    public OpenAPI transportServiceOpenAPI() {
-        return new OpenAPI()
-                .info(new Info()
-                        .title("Transporte API")
-                        .description("API para el servicio de transporte del GIS La Paz")
-                        .version("v1.0.0")
-                        .contact(new Contact()
-                                .name("Sistema GIS La Paz")
-                                .url("https://github.com/Sistema-GIS-La-Paz-Microservicios")))
-                .servers(List.of(
-                        new Server().url("/").description("Default Server URL")
-                ));
-    }
+        @Bean
+        public OpenAPI puntosInteresOpenAPI() {
+            return new OpenAPI()
+                    .info(new Info()
+                            .title("Puntos de Interés API")
+                            .description("API para la gestión de Puntos de Interés en el sistema GIS de La Paz")
+                            .version("v1.0.0")
+                            .contact(new Contact()
+                                    .name("Sistema GIS La Paz")
+                                    .url("https://github.com/Sistema-GIS-La-Paz-Microservicios"))
+                            .license(new License()
+                                    .name("Apache 2.0")
+                                    .url("http://www.apache.org/licenses/LICENSE-2.0")))
+                    .servers(List.of(
+                            new Server().url("http://localhost:8080").description("Local Server")
+                    ));
+        }
 }

@@ -1,4 +1,4 @@
-package SISTEMA_GIS_La_Paz_Microservicios.PuntosInt_service;
+package SISTEMA_GIS_La_Paz_Microservicios;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
