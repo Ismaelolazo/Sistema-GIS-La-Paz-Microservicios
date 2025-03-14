@@ -4,7 +4,10 @@ import SISTEMA_GIS_La_Paz_Microservicios.dto.PuntoInteresDTO;
 import SISTEMA_GIS_La_Paz_Microservicios.service.PuntoInteresService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,14 +38,15 @@ public class PuntosIntController {
 
     @PostMapping("/agregar")
     @Operation(summary = "Agregar un nuevo punto de interés", description = "Crea un nuevo punto de interés en el sistema.")
-    public ResponseEntity<?> agregarPuntoInteres(@RequestBody PuntoInteresDTO nuevoPunto) {
-        try {
-            PuntoInteresDTO puntoCreado = puntoInteresService.agregarPuntoInteres(nuevoPunto);
-            return ResponseEntity.ok(puntoCreado);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error al agregar el punto de interés: " + e.getMessage());
-        }
+    public ResponseEntity<?> agregarPuntoInteres(@Valid @RequestBody PuntoInteresDTO nuevoPunto) {
+    try {
+        PuntoInteresDTO puntoCreado = puntoInteresService.agregarPuntoInteres(nuevoPunto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(puntoCreado);
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al agregar el punto de interés: " + e.getMessage());
     }
+    }
+
 
     @PutMapping("/actualizar/{id}")
     @Operation(summary = "Actualizar un punto de interés", description = "Modifica la información de un punto de interés existente.")

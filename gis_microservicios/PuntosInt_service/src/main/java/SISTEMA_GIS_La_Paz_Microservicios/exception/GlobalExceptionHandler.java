@@ -22,6 +22,7 @@ public class GlobalExceptionHandler {
         return errors;
     }
 
+
     // Manejo de errores de ingreso no autorizado
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
