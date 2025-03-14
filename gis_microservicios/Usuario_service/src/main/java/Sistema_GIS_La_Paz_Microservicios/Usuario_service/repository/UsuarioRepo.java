@@ -4,5 +4,5 @@ import Sistema_GIS_La_Paz_Microservicios.Usuario_service.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UsuarioRepo extends JpaRepository<Usuario, Integer> {
-
+    boolean existsByEmail(String email);
 }
