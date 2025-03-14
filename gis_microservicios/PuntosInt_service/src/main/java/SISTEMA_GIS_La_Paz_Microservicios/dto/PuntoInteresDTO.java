@@ -1,28 +1,35 @@
 package SISTEMA_GIS_La_Paz_Microservicios.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class PuntoInteresDTO {
-    
+
+    @Schema(example = "1", description = "Identificador único del punto de interés")
     @NotNull
     private Integer id;
-    
+
+    @Schema(example = "Plaza Murillo", description = "Nombre del punto de interés")
     @NotBlank
     @Size(min = 3, max = 100)
     private String nombre;
-    
+
+    @Schema(example = "Plaza histórica en el centro de La Paz", description = "Descripción del punto de interés")
     @NotBlank
     @Size(min = 10, max = 255)
     private String descripcion;
-    
+
+    @Schema(example = "-16.5000", description = "Latitud geográfica del punto de interés")
     @NotNull
     private Double latitud;
-    
+
+    @Schema(example = "-68.1500", description = "Longitud geográfica del punto de interés")
     @NotNull
     private Double longitud;
-    
+
+    @Schema(example = "Histórico", description = "Categoría del punto de interés")
     @NotBlank
     @Size(min = 3, max = 50)
     private String categoria;
