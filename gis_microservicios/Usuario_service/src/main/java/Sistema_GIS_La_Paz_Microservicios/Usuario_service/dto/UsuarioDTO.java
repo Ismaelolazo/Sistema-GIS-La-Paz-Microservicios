@@ -5,24 +5,31 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import io.swagger.v3.oas.annotations.media.Schema;
 
+@Schema(description = "Data Transfer Object for User operations")
 public class UsuarioDTO {
 
-    @NotNull
-    @Min(1)
-    @Max(1000)
+    @Schema(description = "User ID", example = "1", required = true)
+    @NotNull(message = "El ID no puede ser nulo")
+    @Min(value = 1, message = "El ID debe ser mayor que 0")
+    @Max(value = 1000, message = "El ID no puede ser mayor que 1000")
     private int id;
 
-    @NotNull
-    @Size(min = 2, max = 50)
+    @Schema(description = "User name", example = "John Doe", required = true)
+    @NotNull(message = "El nombre no puede ser nulo")
+    @Size(min = 2, max = 50, message = "El nombre debe tener entre 2 y 50 caracteres")
     private String name;
 
-    @NotNull
-    @Email
+    @Schema(description = "User email", example = "john.doe@example.com", required = true)
+    @NotNull(message = "El email no puede ser nulo")
+    @Email(message = "El email debe ser válido")
+    @Size(max = 100, message = "El email no puede tener más de 100 caracteres")
     private String email;
 
-    @NotNull
-    @Size(min = 6, max = 20)
+    @Schema(description = "User password", example = "password123", required = true)
+    @NotNull(message = "La contraseña no puede ser nula")
+    @Size(min = 6, max = 20, message = "La contraseña debe tener entre 6 y 20 caracteres")
     private String password;
 
     // Getters and Setters

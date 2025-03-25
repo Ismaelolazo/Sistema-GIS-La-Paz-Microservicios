@@ -4,19 +4,28 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @Entity
 @Table(name = "Usuarios")
+@Schema(description = "Entidad que representa un usuario en el sistema")
 public class Usuario {
 	
 	@Id
     @Column(name = "ID_usuario")
+    @Schema(description = "Identificador único del usuario", example = "1")
     private int id;
+    
 	@Column(name = "Nombre")
+	@Schema(description = "Nombre del usuario", example = "John Doe")
 	private String name;
+    
 	@Column(name="Correo")
+	@Schema(description = "Correo electrónico del usuario", example = "john.doe@example.com")
 	private String email;
+    
 	@Column(name="Contra")
+	@Schema(description = "Contraseña del usuario", example = "password123")
 	private String password;
 	
 	public Usuario() {
