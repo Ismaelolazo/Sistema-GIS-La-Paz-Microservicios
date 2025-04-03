@@ -1,41 +1,6 @@
 version: '3.8'
 
 services:
-<<<<<<< HEAD
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    environment:
-      - SPRING_PROFILES_ACTIVE=prod
-    depends_on:
-      - db
-    networks:
-      - app-network
-
-  db:
-    image: postgres:15
-    container_name: postgres-db
-    restart: always
-    environment:
-      POSTGRES_USER: usuario
-      POSTGRES_PASSWORD: contrasenha
-      POSTGRES_DB: mi_basededatos
-    ports:
-      - "5432:5432"
-    networks:
-      - app-network
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-
-networks:
-  app-network:
-
-volumes:
-  pgdata:
-=======
   postgres:
     image: postgres:14
     container_name: gis-postgres
@@ -81,6 +46,22 @@ volumes:
     networks:
       - gis-network
     restart: unless-stopped
+  
+  puntos-service:
+    build:
+      context: ./gis_microservicios/PuntosInt_service
+      dockerfile: Dockerfile
+    container_name: puntos-service
+    ports:
+      - "8082:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gis
+    networks:
+      - gis-network
+    restart: unless-stopped
+
 
 networks:
   gis-network:
@@ -89,4 +70,3 @@ networks:
 volumes:
   postgres-data:
     driver: local
->>>>>>> 2212f0a (Implementación de configuración Docker y persistencia de datos para microservicios)

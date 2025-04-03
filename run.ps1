@@ -21,3 +21,4 @@ Write-Host "Services are starting up..." -ForegroundColor Green
 Write-Host "- PostgreSQL DB: localhost:5433" -ForegroundColor Cyan
 Write-Host "- Usuario Service: http://localhost:8080/swagger-ui.html" -ForegroundColor Cyan
 Write-Host "- Transport Service: http://localhost:8081/swagger-ui.html" -ForegroundColor Cyan
+Write-Host "- Puntos de Interes Service: http://localhost:8082/swagger-ui.html" -ForegroundColor Cyan
