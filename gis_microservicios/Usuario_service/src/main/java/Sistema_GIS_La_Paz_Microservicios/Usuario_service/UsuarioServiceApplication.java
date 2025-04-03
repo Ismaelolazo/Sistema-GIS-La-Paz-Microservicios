@@ -2,6 +2,7 @@ package Sistema_GIS_La_Paz_Microservicios.Usuario_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,6 +19,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
     }
 )
 @SpringBootApplication
+@EnableScheduling
 public class UsuarioServiceApplication {
 
 	public static void main(String[] args) {
