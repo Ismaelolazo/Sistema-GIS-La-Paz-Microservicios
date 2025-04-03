@@ -4,7 +4,7 @@ import SISTEMA_GIS_La_Paz_Microservicios.dto.PuntoInteresDTO;
 import SISTEMA_GIS_La_Paz_Microservicios.service.PuntoInteresService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
