@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+<<<<<<< HEAD
   backend:
     build:
       context: ./backend
@@ -34,3 +35,58 @@ networks:
 
 volumes:
   pgdata:
+=======
+  postgres:
+    image: postgres:14
+    container_name: gis-postgres
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 133133
+      POSTGRES_DB: gis
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./Gis_create.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - gis-network
+    restart: unless-stopped
+
+  usuario-service:
+    build:
+      context: ./gis_microservicios/Usuario_service
+      dockerfile: Dockerfile
+    container_name: usuario-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gis
+    networks:
+      - gis-network
+    restart: unless-stopped
+
+  transport-service:
+    build:
+      context: ./gis_microservicios/Transport_service
+      dockerfile: Dockerfile
+    container_name: transport-service
+    ports:
+      - "8081:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gis
+    networks:
+      - gis-network
+    restart: unless-stopped
+
+networks:
+  gis-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+    driver: local
+>>>>>>> 2212f0a (Implementación de configuración Docker y persistencia de datos para microservicios)
