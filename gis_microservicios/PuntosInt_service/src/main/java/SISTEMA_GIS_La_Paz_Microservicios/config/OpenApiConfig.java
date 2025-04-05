@@ -1,4 +1,3 @@
-
 package SISTEMA_GIS_La_Paz_Microservicios.config;
 
 import java.util.List;

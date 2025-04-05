@@ -1,18 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    
-=======
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
->>>>>>> Stashed changes
-=======
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
->>>>>>> Stashed changes
     <modelVersion>4.0.0</modelVersion>
     <groupId>SISTEMA_GIS_La_Paz_Microservicios</groupId>
     <artifactId>PuntosInt_service</artifactId>
@@ -22,15 +11,10 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
         <version>3.2.3</version>
-        <relativePath/>
+        <relativePath/> <!-- Lookup parent from repository -->
     </parent>
 
-    <groupId>Sistema-GIS-La-Paz-Microservicios</groupId>
-    <artifactId>PuntosInt_service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>PuntosInt_service</name>
     <description>Microservicio de puntos de interés para el sistema GIS La Paz</description>
 
@@ -42,32 +26,16 @@
 
     <dependencies>
         <!-- Web MVC para controladores REST -->
-=======
-        <version>2.7.5</version>
-        <relativePath/> <!-- Lookup parent from repository -->
-    </parent>
-
-    <dependencies>
->>>>>>> Stashed changes
-=======
-        <version>2.7.5</version>
-        <relativePath/> <!-- Lookup parent from repository -->
-    </parent>
-
-    <dependencies>
->>>>>>> Stashed changes
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
-<<<<<<< Updated upstream
 
         <!-- Validaciones con @Valid -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
-<<<<<<< Updated upstream
 
         <!-- PostgreSQL driver -->
         <dependency>
@@ -84,29 +52,17 @@
         <!-- Swagger / OpenAPI UI -->
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.3.0</version>
         </dependency>
 
-
         <!-- Test -->
-=======
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
->>>>>>> Stashed changes
-=======
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
->>>>>>> Stashed changes
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
         <!-- Swagger OpenAPI Dependency -->
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
@@ -118,6 +74,7 @@
             <artifactId>swagger-core</artifactId>
             <version>2.2.8</version>
         </dependency>
+
         <!-- Hibernate Validator Dependency -->
         <dependency>
             <groupId>org.hibernate.validator</groupId>
@@ -129,6 +86,28 @@
             <artifactId>validation-api</artifactId>
             <version>2.0.1.Final</version>
         </dependency>
+
+        <!-- Jakarta Servlet API Dependency -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>5.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Spring Boot Starter Tomcat -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+        </dependency>
+
+        <!-- Lombok Dependency -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.28</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -138,15 +117,6 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <mainClass>SISTEMA_GIS_La_Paz_Microservicios.PuntosIntServiceApplication</mainClass>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <source>17</source>
-                    <target>17</target>
                 </configuration>
             </plugin>
             <plugin>

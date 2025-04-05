@@ -20,11 +20,13 @@ CREATE TABLE Paradas (
 );
 
 -- Table: Puntos_Interes
-CREATE TABLE Puntos_Interes (
-    ID_punto_interes int  NOT NULL,
-    Nombre varchar(255)  NULL,
-    Descripcion text  NULL,
-    CONSTRAINT Puntos_Interes_pk PRIMARY KEY (ID_punto_interes)
+CREATE TABLE IF NOT EXISTS Puntos_Interes (
+    ID_punto_interes SERIAL PRIMARY KEY,
+    Nombre VARCHAR(255) NOT NULL,
+    Descripcion TEXT NOT NULL,
+    Latitud DECIMAL(10,6) NOT NULL,
+    Longitud DECIMAL(10,6) NOT NULL,
+    Categoria VARCHAR(50) NOT NULL
 );
 
 -- Table: Puntos_Rutas_Turisticas

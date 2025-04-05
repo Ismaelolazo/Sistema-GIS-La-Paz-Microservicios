@@ -2,14 +2,12 @@ package SISTEMA_GIS_La_Paz_Microservicios.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class PuntoInteresDTO {
 
     @Schema(example = "1", description = "Identificador único del punto de interés")
-    @NotNull(message = "El ID no puede ser nulo")
-    private Integer id;
+    private Integer id; // Puede ser null al agregar un nuevo punto
 
     @Schema(example = "Plaza Murillo", description = "Nombre del punto de interés")
     @NotBlank(message = "El nombre no puede estar vacío")
@@ -22,11 +20,9 @@ public class PuntoInteresDTO {
     private String descripcion;
 
     @Schema(example = "-16.5000", description = "Latitud geográfica del punto de interés")
-    @NotNull(message = "La latitud no puede ser nula")
     private Double latitud;
 
     @Schema(example = "-68.1500", description = "Longitud geográfica del punto de interés")
-    @NotNull(message = "La longitud no puede ser nula")
     private Double longitud;
 
     @Schema(example = "Histórico", description = "Categoría del punto de interés")
