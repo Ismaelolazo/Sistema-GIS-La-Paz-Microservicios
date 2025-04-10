@@ -19,6 +19,21 @@ CREATE TABLE Paradas (
     CONSTRAINT Paradas_pk PRIMARY KEY (ID_parada)
 );
 
+CREATE TABLE Tarifas_Transporte (
+    ID_tarifa INT NOT NULL,
+    ID_ruta INT NOT NULL,
+    Tipo_vehiculo ENUM('Minibús', 'Bus', 'Teleférico') NOT NULL,
+    Horario ENUM('Diurno', 'Nocturno') NOT NULL,
+    Tramo ENUM('Corto', 'Largo') NOT NULL,
+    Condicion_usuario ENUM('General', 'Tercera edad', 'Discapacidad') NOT NULL,
+    Precio DECIMAL(5,2) NOT NULL,
+    CONSTRAINT Tarifas_Transporte_pk PRIMARY KEY (ID_tarifa),
+    CONSTRAINT FK_tarifa_ruta FOREIGN KEY (ID_ruta)
+        REFERENCES Rutas_Transporte (ID_ruta)
+        ON DELETE CASCADE
+);
+
+
 -- Table: Puntos_Interes
 CREATE TABLE Puntos_Interes (
     ID_punto_interes int  NOT NULL,

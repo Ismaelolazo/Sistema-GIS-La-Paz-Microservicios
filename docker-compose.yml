@@ -1,44 +1,10 @@
 version: '3.8'
 
 services:
-<<<<<<< HEAD
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    environment:
-      - SPRING_PROFILES_ACTIVE=prod
-    depends_on:
-      - db
-    networks:
-      - app-network
-
-  db:
-    image: postgres:15
-    container_name: postgres-db
-    restart: always
-    environment:
-      POSTGRES_USER: usuario
-      POSTGRES_PASSWORD: contrasenha
-      POSTGRES_DB: mi_basededatos
-    ports:
-      - "5432:5432"
-    networks:
-      - app-network
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-
-networks:
-  app-network:
-
-volumes:
-  pgdata:
-=======
+  # Database Service
   postgres:
     image: postgres:14
-    container_name: gis-postgres
+    container_name: postgres
     ports:
       - "5433:5432"
     environment:
@@ -46,47 +12,31 @@ volumes:
       POSTGRES_PASSWORD: 133133
       POSTGRES_DB: gis
     volumes:
-      - postgres-data:/var/lib/postgresql/data
-      - ./Gis_create.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./Gis_create.sql:/docker-entrypoint-initdb.d/Gis_create.sql
+      - ./postgres-data:/var/lib/postgresql/data
+    restart: always
     networks:
       - gis-network
-    restart: unless-stopped
 
-  usuario-service:
+  # Micro Transport Microservice
+  transport_micros_service:
     build:
-      context: ./gis_microservicios/Usuario_service
+      context: ./gis_microservicios/Transport_micros_service
       dockerfile: Dockerfile
-    container_name: usuario-service
+    container_name: transport_micros_service
     ports:
-      - "8080:8080"
+      - "8081:8081"
     depends_on:
       - postgres
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gis
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/gis
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=133133
     networks:
       - gis-network
-    restart: unless-stopped
 
-  transport-service:
-    build:
-      context: ./gis_microservicios/Transport_service
-      dockerfile: Dockerfile
-    container_name: transport-service
-    ports:
-      - "8081:8080"
-    depends_on:
-      - postgres
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gis
-    networks:
-      - gis-network
-    restart: unless-stopped
-
+# Shared network for all services
 networks:
   gis-network:
     driver: bridge
 
-volumes:
-  postgres-data:
-    driver: local
->>>>>>> 2212f0a (Implementación de configuración Docker y persistencia de datos para microservicios)

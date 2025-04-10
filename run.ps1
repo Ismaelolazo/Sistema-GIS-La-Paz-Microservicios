@@ -1,6 +1,6 @@
-# Script to run the GIS microservices system
+# Script to run the GIS microservices system - Only Micros service and DB
 
-Write-Host "Starting GIS microservices with Docker Compose..." -ForegroundColor Green
+Write-Host "Starting Micro Transport service and PostgreSQL DB with Docker Compose..." -ForegroundColor Green
 
 # Make sure we're in the right directory
 $scriptPath = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -12,12 +12,12 @@ if (-Not (Test-Path ".\Gis_create.sql")) {
     Copy-Item ".\Downloads\Gis_create.sql" ".\Gis_create.sql" -ErrorAction SilentlyContinue
 }
 
-# Run docker-compose
+# Run docker-compose with only postgres and transport_micros services
 docker-compose down
-docker-compose build --no-cache
-docker-compose up -d
+Write-Host "Building and starting only postgres and transport_micros services..." -ForegroundColor Yellow
+docker-compose build --no-cache postgres transport_micros_service
+docker-compose up -d postgres transport_micros_service
 
 Write-Host "Services are starting up..." -ForegroundColor Green
 Write-Host "- PostgreSQL DB: localhost:5433" -ForegroundColor Cyan
-Write-Host "- Usuario Service: http://localhost:8080/swagger-ui.html" -ForegroundColor Cyan
-Write-Host "- Transport Service: http://localhost:8081/swagger-ui.html" -ForegroundColor Cyan
+Write-Host "- Transport Micros Service: http://localhost:8081/swagger-ui.html" -ForegroundColor Cyan
